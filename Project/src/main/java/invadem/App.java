@@ -21,8 +21,10 @@ public class App extends PApplet {
     private final int SIZE_X = 640;
     private final int SIZE_Y = 480;
     private int timeCheck = millis();
+    private int timeCheck4Tank = millis();
     private int invadersAttackSpeed = 3000;
 
+    private boolean debug = false;
     // Images
     public static PImage regularBullet;
     public static PImage powerBullet;
@@ -90,6 +92,8 @@ public class App extends PApplet {
     }
     private void buildObjects() {
         tank = new Tank(tankImage);
+        if(debug)
+            tank.setAttackSpeed(1);
         barriers = new Barriers(leftBarriers, topBarriers, rightBarriers, solidBarriers);
         invaders = new Invaders(regularInvaderImg, powerInvaderImg, armouredInvaderImg, 180, 20);
         judge = new Judge(tank, invaders, barriers);
@@ -111,9 +115,9 @@ public class App extends PApplet {
                     tank.moveLeft();
                 if (keys[1] && tank.getX() <= 460)
                     tank.moveRight();
-                if (keys[2] && millis() > timeCheck + tank.getAttackSpeed()) {
+                if (keys[2] && millis() > timeCheck4Tank + tank.getAttackSpeed()) {
                     tank.attack();
-                    timeCheck = millis();
+                    timeCheck4Tank = millis();
                 }
 
             if(invaders.getInvadersLeft() == 0)
@@ -159,7 +163,8 @@ public class App extends PApplet {
 
         barriers.showGroup();
         invaders.showGroup();
-        invaders.moveGroup();
+        if(!debug)
+            invaders.moveGroup();
         tank.show();
         if (millis() > timeCheck + invadersAttackSpeed) {
             invaders.groupAttack();
@@ -210,7 +215,8 @@ public class App extends PApplet {
         drawInvaderHitCount();
         drawTankInfo();
         drawInvadersLeft();
-        showDebug();
+        if(debug)
+            showDebug();
     }
 
     private void drawTankInfo()
@@ -245,7 +251,12 @@ public class App extends PApplet {
         text(invadersAttackSpeed, 50, 400);
         text(tank.getBullets().size() + "", 310,35);
         text(frameCount, 620, 400);
+    }
 
+    private void debug()
+    {
+        if(!debug)
+            debug = true;
     }
 
     public static void main(String[] args) {

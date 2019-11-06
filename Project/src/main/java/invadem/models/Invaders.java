@@ -67,8 +67,8 @@ public class Invaders{
     }
 
     public void moveGroup() {
-//        for(Invader o: invaders)
-//            o.move();
+        for(Invader o: invaders)
+            o.move();
     }
 
     public Invader[] getInvaders() {

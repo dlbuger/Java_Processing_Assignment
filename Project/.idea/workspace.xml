@@ -6,33 +6,15 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/invadem/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/invadem/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/invadem/Judge.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/invadem/Judge.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/invadem/models/Attackable.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/invadem/models/Attackable.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/invadem/models/Tank.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/invadem/models/Tank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/test/invadem/BarrierTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/invadem/BarrierTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/test/invadem/InvaderTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/invadem/InvaderTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/test/invadem/ProjectileTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/invadem/ProjectileTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/test/invadem/TankTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/invadem/TankTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/invadem/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/invadem/Judge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/Judge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/invadem/models/Attackable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/models/Attackable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/invadem/models/Projectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/models/Projectile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/invadem/models/Invaders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/models/Invaders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/invadem/models/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/models/Tank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/invadem/BarrierTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/invadem/BarrierTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/invadem/InvaderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/invadem/InvaderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/invadem/ProjectileTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/invadem/ProjectileTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/invadem/TankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/invadem/TankTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -104,33 +86,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.InvaderTest.testRegularInvaderScore">
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="invadem.App" />
+      <module name="Project.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="invadem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="InvaderTest.testRegularInvaderScore" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" value="--tests &quot;invadem.InvaderTest.testRegularInvaderScore&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":cleanTest" />
-            <option value=":test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="TankTest.testTankConstruction" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;invadem.TankTest.testTankConstruction&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -207,11 +182,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.App" />
         <item itemvalue="Gradle.InvaderTest.testRegularInvaderScore" />
         <item itemvalue="Gradle.TankTest.testTankIsDead" />
         <item itemvalue="Gradle.TankTest.testTankIsNotDead" />
         <item itemvalue="Gradle.TankTest.testTankProjectile" />
-        <item itemvalue="Gradle.TankTest.testTankConstruction" />
       </list>
     </recent_temporary>
   </component>
@@ -249,6 +224,7 @@
       <workItem from="1572954952619" duration="3349000" />
       <workItem from="1572958492677" duration="1935000" />
       <workItem from="1573046422305" duration="5964000" />
+      <workItem from="1573052668067" duration="897000" />
     </task>
     <task id="LOCAL-00001" summary="95">
       <created>1572675578877</created>

@@ -15,7 +15,7 @@ public class Tank extends Attackable implements Destroyable {
 
 
     public Tank(PImage img) {
-        super(320, 450, 1,1, App.regularBullet);
+        super(320, 450, 1,80, App.regularBullet);
         health = 10;
         this.img = img;
         moveSpeed = 3;
@@ -55,6 +55,12 @@ public class Tank extends Attackable implements Destroyable {
         else
             return false;
     }
+
+    public void setAttackSpeed(int a){
+        // Only used for debug
+        attackSpeed = a;
+    }
+
 
     public int getX() {
         return (int)x;
