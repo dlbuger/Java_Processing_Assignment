@@ -7,20 +7,21 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class Invaders{
-    private Invader[] invaders;
+    // private Invader[] invaders;
     private int startX, startY, invadersLeft;  // (0,0) Invader's position
 
     private PImage[] armouredImg; // 1
     private PImage[] powerImg; // 2
     private PImage[] regularImg; // 3, 4
 
+    private LinkedList<Invader> invaders;
     private LinkedList<Projectile> bullets;
 
     public Invaders(PImage[] regularImg, PImage[] powerImg, PImage[] armouredImg, int x, int y) {
         this.startX = x;
         this.startY = y;
         invadersLeft = 40;
-        invaders = new Invader[invadersLeft];
+        invaders = new LinkedList<Invader>();
         bullets = new LinkedList<Projectile>();
         this.regularImg = regularImg;
         this.powerImg = powerImg;
@@ -33,17 +34,17 @@ public class Invaders{
         int _tmpY = 0;
 
         // Setup Regular Invaders
-        for(int i = 0; i < invaders.length; i++) {
+        for(int i = 0; i < invadersLeft; i++) {
             if (i % 10 == 0) {
                 _tmpY ++;
                 _tmpX = 0;
             }
+            if(i < 10)
+                invaders.add(new ArmouredInvader(armouredImg, startX + _tmpX * 30, startY + _tmpY * 30));
+            if (i >= 10 && i < 20)
+                invaders.add(new PowerInvader(powerImg, startX + _tmpX * 30, startY + _tmpY * 30));
             if(i >= 20)
-                invaders[i] = new RegularInvader(regularImg, startX + _tmpX * 30, startY + _tmpY * 30);
-            else if(i < 10)
-                invaders[i] = new ArmouredInvader(armouredImg, startX + _tmpX * 30, startY + _tmpY * 30);
-            else if (i >= 10 && i < 20)
-                invaders[i] = new PowerInvader(powerImg, startX + _tmpX * 30, startY + _tmpY * 30);
+                invaders.add(new RegularInvader(regularImg, startX + _tmpX * 30, startY + _tmpY * 30));
 
             _tmpX++;
         }
@@ -56,8 +57,8 @@ public class Invaders{
         int number;
         for(int i = 0; i < numOfBullets; i++) {
             number = r.nextInt(40);
-            invaders[number].attack();
-            bullets.add(invaders[number].getBullets().getLast());
+            invaders.get(number).attack();
+            bullets.add(invaders.get(number).getBullets().getLast());
         }
     }
 
@@ -71,7 +72,7 @@ public class Invaders{
             o.move();
     }
 
-    public Invader[] getInvaders() {
+    public LinkedList<Invader> getInvaders() {
         return invaders;
     }
     public LinkedList<Projectile> getBullets() {

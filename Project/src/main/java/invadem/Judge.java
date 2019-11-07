@@ -2,6 +2,7 @@ package invadem;
 
 import invadem.models.*;
 import java.util.Iterator;
+import java.util.Random;
 
 public class Judge {
     private Tank tank;
@@ -9,6 +10,7 @@ public class Judge {
     private Barriers barriers;
     private int invadersHitCount = 0;
     private int fullScore = 0;
+
 
     public Judge(Tank tank, Invaders invaders, Barriers barriers) {
         this.tank = tank;
@@ -28,7 +30,7 @@ public class Judge {
 
     public void check() {
 
-        if (invaders.getInvadersLeft() == 0) {
+        if (invaders.getInvadersLeft() <= 0) {
             App.gameState = App.NEXT;
         }
         check4Tank();
@@ -37,11 +39,11 @@ public class Judge {
         checkBulletInside();
     }
 
-    private void nuke() {
+    public void nuke() {
         // 用来测试是否能达成胜利条件
         for (Invader o : invaders.getInvaders()) {
-            o.hit(3);
-            invadersHitCount++;
+            o.hit(o.getHealth());
+            invaders.invaderKilled();
         }
     }
 
@@ -88,23 +90,36 @@ public class Judge {
 
     private void check4Tank() {
         Iterator<Projectile> iterator = tank.getBullets().iterator();
-        while(iterator.hasNext())
-        {
+        Iterator<Invader> invaderIterator = invaders.getInvaders().iterator();
+        while(iterator.hasNext()) {
             Projectile bullet = iterator.next();
-            for(Invader invader: invaders.getInvaders())
-                if(_check(bullet, invader))
-                {
+            for(Invader invader: invaders.getInvaders()) {
+                if (_check(bullet, invader)) {
                     invader.hit(bullet.getAttackPoint());
                     bullet.hit(bullet.getHealth());
                     iterator.remove();
-                    if(invader.isDestroyed()) {
+                    if (invader.isDestroyed()) {
                         invadersHitCount += invader.getScore();
                         invaders.invaderKilled();
+                        Random r = new Random();
+                        int condition = r.nextInt(10);
+                        if (condition > 6 && invadersHitCount > 10000) {
+                            //  40% TO Active chain Reaction! Rate will decrease when invaders are killed
+                            System.out.println("Chain Reaction!");
+                            r = new Random();
+                            int _index = r.nextInt(40);
+                            if(!invaders.getInvaders().get(_index).isDestroyed()){
+                                invaders.getInvaders().get(_index).hit(invaders.getInvaders().get(_index).getHealth());
+                                invadersHitCount += invaders.getInvaders().get(_index).getScore();
+                                invaders.invaderKilled();
+                            }
+                        }
                     }
                 }
-            if(checkBarrier(bullet)) {
-                bullet.hit(bullet.getHealth());
-                iterator.remove();
+            }
+                if (checkBarrier(bullet)) {
+                    bullet.hit(bullet.getHealth());
+                    iterator.remove();
             }
         }
     }

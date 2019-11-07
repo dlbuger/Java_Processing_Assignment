@@ -11,8 +11,11 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/invadem/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/invadem/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/invadem/Judge.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/invadem/Judge.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/invadem/models/Invaders.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/invadem/models/Invaders.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/invadem/models/Tank.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/invadem/models/Tank.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/invadem/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/invadem/Judge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/Judge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/invadem/models/Invaders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/models/Invaders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/invadem/models/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/invadem/models/Tank.java" afterDir="false" />
     </list>
@@ -225,6 +228,7 @@
       <workItem from="1572958492677" duration="1935000" />
       <workItem from="1573046422305" duration="5964000" />
       <workItem from="1573052668067" duration="897000" />
+      <workItem from="1573095699556" duration="10035000" />
     </task>
     <task id="LOCAL-00001" summary="95">
       <created>1572675578877</created>

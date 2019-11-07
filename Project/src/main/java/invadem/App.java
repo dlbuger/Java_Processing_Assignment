@@ -23,7 +23,7 @@ public class App extends PApplet {
     private int timeCheck = millis();
     private int timeCheck4Tank = millis();
     private int invadersAttackSpeed = 3000;
-
+    private int level = 1;
     private boolean debug = false;
     // Images
     public static PImage regularBullet;
@@ -50,8 +50,7 @@ public class App extends PApplet {
     private boolean[] keys;
     private PFont startFont;
     private PFont UIFont;
-
-
+    
     public void setup() {
         // Load Images Here
         frameRate(60);
@@ -86,14 +85,15 @@ public class App extends PApplet {
         armouredInvaderImg[1] = loadImage("invader2_armoured.png");
         buildObjects();
     }
-
     public App() {
         game = this;
     }
     private void buildObjects() {
-        tank = new Tank(tankImage);
-        if(debug)
-            tank.setAttackSpeed(1);
+        tank = new Tank(tankImage,320,450);
+        if(debug) {
+            tank.setAttackSpeed(0);
+            tank.setHealth(10);
+        }
         barriers = new Barriers(leftBarriers, topBarriers, rightBarriers, solidBarriers);
         invaders = new Invaders(regularInvaderImg, powerInvaderImg, armouredInvaderImg, 180, 20);
         judge = new Judge(tank, invaders, barriers);
@@ -101,11 +101,10 @@ public class App extends PApplet {
         startFont = createFont("PressStart2P-Regular.tff", 24, true);
         UIFont = createFont("PressStart2P-Regular.tff", 16, true);
     }
-
     public void settings() {
         size(SIZE_X, SIZE_Y);
+        // debug();
     }
-
     public void draw() {
         gameStart();
         if (gameState == ON) {
@@ -122,18 +121,31 @@ public class App extends PApplet {
 
             if(invaders.getInvadersLeft() == 0)
                 timeCheck = millis();
-        } else if (gameState == END)
+        }
+        else if (gameState == END)
             gameOver();
         else if (gameState == NEXT) {
-            nextLevel();
+            background(0);
+            image(_nextLevel, (SIZE_X - _gameOver.width) / 2, 200);
+            if(level >= 3)
+            {
+                fill(255);
+                textFont(UIFont);
+                text("Your Barriers will NOT be repaired", SIZE_X / 2, 250);
+            }
+            if(level >= 4){
+                fill(255);
+                textFont(UIFont);
+                text("Your Tank Health will NOT be reset\nBut Will your Level up,\nyou will gain 1 health", SIZE_X / 2, 300);
+            }
             if(millis() > timeCheck + 2000) {
+                nextLevel();
                 gameState = ON;
                 if(invadersAttackSpeed >= 2000)
                     invadersAttackSpeed -= 1000;
             }
         }
     }
-
     // Scene
     private void gameStart() {
         background(255);
@@ -142,21 +154,14 @@ public class App extends PApplet {
         textSize(32);
         textFont(startFont);
         fill(0);
-        text("Press any key to start Game!", SIZE_X / 2, SIZE_Y - 100);
-
+        text("Press <ENTER> to start Game!", SIZE_X / 2, SIZE_Y - 100);
         textAlign(CENTER, CENTER);
         textSize(20);
         textFont(startFont);
         text("Use <Arrow Key> to move, <SPACE> to shoot!", SIZE_X / 2, SIZE_Y / 2);
-        if (keyPressed)
+        if (keyCode == ENTER)
             gameState = ON;
     }
-
-    private void selectMode() {
-        // ToDo 选择模式 Duo or Solo
-    }
-
-
     private void gameOn() {
         background(0);
         drawUI();
@@ -172,24 +177,39 @@ public class App extends PApplet {
         }
         judge.check();
     }
-
     private void nextLevel() {
         System.out.println("[NEXT LEVEL!!!]");
-        background(0);
-        image(_nextLevel, (SIZE_X - _gameOver.width) / 2, SIZE_Y / 2);
-        barriers = new Barriers(leftBarriers, topBarriers, rightBarriers, solidBarriers);
+        if(level < 3)
+            barriers = new Barriers(leftBarriers, topBarriers, rightBarriers, solidBarriers);
         invaders = new Invaders(regularInvaderImg, powerInvaderImg, armouredInvaderImg, 180, 20);
-        tank = new Tank(tankImage);
+        if(level < 4)
+            tank = new Tank(tankImage, 320, 450);
+        if(level >= 4)
+            tank.setHealth(tank.getHealth() + 1);
+        if(debug) {
+            tank.setAttackSpeed(0);
+            tank.setHealth(10);
+        }
         judge.update(tank,invaders,barriers);
-
+        level++;
     }
-
     private void gameOver() {
         noLoop();
         background(0);
-        image(_gameOver, (SIZE_X - _gameOver.width) / 2, SIZE_Y / 2);
+        image(_gameOver, (SIZE_X - _gameOver.width) / 2, 200);
+        int score = 10000;
+        if(judge.getHitCount() > score) {
+            score = judge.getHitCount();
+            textAlign(CENTER,CENTER);
+            fill(255);
+            textFont(UIFont);
+            text("New Highest Record !!!", (SIZE_X) / 2, 300);
+        }
+        textAlign(CENTER,CENTER);
+        fill(255);
+        textFont(UIFont);
+        text("Current Highest Score: " + score, (SIZE_X) / 2, 250);
     }
-
     // Control
     public void keyPressed() {
             if (keyCode == LEFT)
@@ -199,7 +219,6 @@ public class App extends PApplet {
             if (key == ' ')
                 keys[2] = true;
     }
-
     public void keyReleased() {
             if (keyCode == LEFT)
                 keys[0] = false;
@@ -207,18 +226,24 @@ public class App extends PApplet {
                 keys[1] = false;
             if (key == ' ')
                 keys[2] = false;
+            if(debug)
+                if(keyCode == BACKSPACE)
+                    judge.nuke();
     }
-
-
     // UI
     private void drawUI() {
         drawInvaderHitCount();
         drawTankInfo();
         drawInvadersLeft();
+        drawLevel();
+        if(judge.getHitCount() >= 10000 && judge.getHitCount() <= 10300){
+            fill(255);
+            textFont(UIFont);
+            text("Congratulation, new Skill <Chain Reaction> is usable!", SIZE_X/2, 300);
+        }
         if(debug)
             showDebug();
     }
-
     private void drawTankInfo()
     {
         for (int i = 0; i < tank.getHealth(); i++) {
@@ -237,7 +262,6 @@ public class App extends PApplet {
         text("Points Earned:", 555, 20);
         text(judge.getHitCount() + "", 565, 35);
     }
-
     private void drawInvadersLeft()
     {
         fill(255);
@@ -245,20 +269,30 @@ public class App extends PApplet {
         textFont(UIFont);
         text(invaders.getInvadersLeft() + "  Enimes left" ,310 , 20);
     }
-
     private void showDebug()
     {
-        text(invadersAttackSpeed, 50, 400);
-        text(tank.getBullets().size() + "", 310,35);
-        text(frameCount, 620, 400);
+        fill(255);
+        textSize(14);
+        textFont(UIFont);
+        text("Invaders Attack \nSpeed: " + invadersAttackSpeed, 70, 440);
+        text("Bullets Count:", 70, 60);
+        text(tank.getBullets().size() + "", 60,85);
+        text("Tick: " + frameCount, 580, 460);
+        text("Debug Mode", 65,250);
+        text("<BackSpace> \nNUKE", 65, 290);
     }
-
+    private void drawLevel()
+    {
+        fill(255);
+        textSize(14);
+        textFont(UIFont);
+        text("Level " + level ,310 , 40);
+    }
     private void debug()
     {
         if(!debug)
             debug = true;
     }
-
     public static void main(String[] args) {
         PApplet.main("invadem.App");
     }
