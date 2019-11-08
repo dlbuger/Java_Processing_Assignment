@@ -12,6 +12,7 @@ public class Tank extends Attackable implements Destroyable {
     private int health;
     private PImage img;
     private int attackPoint = 1;
+    private int gunNum = 1;
 
 // 320, 450
     public Tank(PImage img, int x, int y) {
@@ -32,8 +33,15 @@ public class Tank extends Attackable implements Destroyable {
             for (Projectile b: bullets)
                 b.move(true);
         }
-        else
-            App.gameState = App.END;
+    }
+
+    public void attack() {
+        for(int i = 0; i < gunNum;i++)
+            bullets.add(new Projectile(bulletImg,x + 11 + i * 3,y, attackPoint));
+    }
+
+    public void upgradeGun(){
+        gunNum = 2;
     }
 
     public void moveLeft() {
@@ -57,12 +65,10 @@ public class Tank extends Attackable implements Destroyable {
     }
 
     public void setAttackSpeed(int a){
-        // Only used for debug
         attackSpeed = a;
     }
 
     public void setHealth(int a) {
-        // Only used for debug
         health = a;
     }
 
@@ -90,4 +96,12 @@ public class Tank extends Attackable implements Destroyable {
     public LinkedList<Projectile> getBullets() {
         return bullets;
     }
+    public int getGunNum(){
+        return gunNum;
+    }
+
+    public void setGunNum(int a){
+        gunNum = a;
+    }
+
 }

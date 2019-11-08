@@ -51,6 +51,18 @@ public class Barrier {
         for(BarrierComponent o:barrier)
             o.show();
     }
+
+    public boolean isAllDestroyed()
+    {
+        boolean _temp = false;
+        for(BarrierComponent o: barrier)
+            if(o.isDestroyed())
+                _temp = true;
+            else
+                _temp = false;
+        return _temp;
+    }
+
     public BarrierComponent[] getBarrierComponents() {
         return barrier;
     }

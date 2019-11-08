@@ -51,15 +51,15 @@ public class Invaders{
     }
 
     public void groupAttack() {
-        // ToDo 随机出几个Invaders发射子弹
-        Random r = new Random();
-        int numOfBullets = r.nextInt(7);
-        int number;
-        for(int i = 0; i < numOfBullets; i++) {
-            number = r.nextInt(40);
-            invaders.get(number).attack();
-            bullets.add(invaders.get(number).getBullets().getLast());
-        }
+//        // ToDo 随机出几个Invaders发射子弹
+//        Random r = new Random();
+//        int numOfBullets = r.nextInt(7);
+//        int number;
+//        for(int i = 0; i < numOfBullets; i++) {
+//            number = r.nextInt(40);
+//            invaders.get(number).attack();
+//            bullets.add(invaders.get(number).getBullets().getLast());
+//        }
     }
 
     public void showGroup() {
@@ -68,8 +68,8 @@ public class Invaders{
     }
 
     public void moveGroup() {
-        for(Invader o: invaders)
-            o.move();
+//        for(Invader o: invaders)
+//            o.move();
     }
 
     public LinkedList<Invader> getInvaders() {

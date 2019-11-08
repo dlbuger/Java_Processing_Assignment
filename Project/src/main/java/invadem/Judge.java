@@ -8,7 +8,8 @@ public class Judge {
     private Tank tank;
     private Invaders invaders;
     private Barriers barriers;
-    private int invadersHitCount = 0;
+    private int score = 0;
+    private int scoreEarned = 0;
     private int fullScore = 0;
 
 
@@ -29,11 +30,9 @@ public class Judge {
     }
 
     public void check() {
-
-        if (invaders.getInvadersLeft() <= 0) {
-            App.gameState = App.NEXT;
-        }
         check4Tank();
+        checkNextLevel();
+        checkTankAlive();
         check4Invader();
         check4Crash();
         checkBulletInside();
@@ -55,7 +54,7 @@ public class Judge {
                         o.hit(invader.getHealth()); // 传入子弹的攻击力
                         invader.hit(o.getAttackPoint());
                         if (invader.isDestroyed()) {
-                            invadersHitCount += invader.getScore();
+                            increaseScore(invader.getScore());
                             invaders.invaderKilled();
                         }
                     }
@@ -63,7 +62,7 @@ public class Judge {
                 invader.hit(1);
                 tank.hit(invader.getHealth());
                 if (invader.isDestroyed()) {
-                    invadersHitCount += invader.getScore();
+                    increaseScore (invader.getScore());
                     invaders.invaderKilled();
                 }
             }
@@ -90,7 +89,6 @@ public class Judge {
 
     private void check4Tank() {
         Iterator<Projectile> iterator = tank.getBullets().iterator();
-        Iterator<Invader> invaderIterator = invaders.getInvaders().iterator();
         while(iterator.hasNext()) {
             Projectile bullet = iterator.next();
             for(Invader invader: invaders.getInvaders()) {
@@ -99,21 +97,9 @@ public class Judge {
                     bullet.hit(bullet.getHealth());
                     iterator.remove();
                     if (invader.isDestroyed()) {
-                        invadersHitCount += invader.getScore();
+                        increaseScore(invader.getScore());
                         invaders.invaderKilled();
-                        Random r = new Random();
-                        int condition = r.nextInt(10);
-                        if (condition > 6 && invadersHitCount > 10000) {
-                            //  40% TO Active chain Reaction! Rate will decrease when invaders are killed
-                            System.out.println("Chain Reaction!");
-                            r = new Random();
-                            int _index = r.nextInt(40);
-                            if(!invaders.getInvaders().get(_index).isDestroyed()){
-                                invaders.getInvaders().get(_index).hit(invaders.getInvaders().get(_index).getHealth());
-                                invadersHitCount += invaders.getInvaders().get(_index).getScore();
-                                invaders.invaderKilled();
-                            }
-                        }
+                        Check4chainReaction();
                     }
                 }
             }
@@ -163,7 +149,79 @@ public class Judge {
         return false;
     }
 
-    public int getHitCount() {
-        return invadersHitCount;
+    private void Check4chainReaction()
+    {
+        Random r = new Random();
+        int condition = r.nextInt(10);
+        if (condition > 6 && scoreEarned > 10000) {
+            //  40% TO Active chain Reaction! Rate will decrease when invaders are killed
+            System.out.println("Chain Reaction!");
+            r = new Random();
+            int _index = r.nextInt(40);
+            if(!invaders.getInvaders().get(_index).isDestroyed()){
+                invaders.getInvaders().get(_index).hit(invaders.getInvaders().get(_index).getHealth());
+                score += invaders.getInvaders().get(_index).getScore();
+                invaders.invaderKilled();
+            }
+        }
+    }
+
+    public void repairBarrier(int index)
+    {
+        if(barriers.getBarriers()[index].isAllDestroyed() && score >= 5000) {
+            barriers.repairBarrier(index);
+            score -= 5000;
+        }
+        else
+            System.out.println("Insufficient Score!");
+    }
+
+    public void increaseFireSpeed(){
+        if(score >= 7000 && tank.getAttackSpeed() != 0) {
+            if (tank.getAttackSpeed() - 15 >= 0)
+                tank.setAttackSpeed(tank.getAttackSpeed() - 15);
+            else
+                tank.setAttackSpeed(0);
+            score -= 7000;
+        }
+        else
+            System.out.println("Insufficient Score!");
+    }
+
+    public void upgradeGun(){
+        if(score >= 5000) {
+            if(tank.getGunNum() == 1) {
+                tank.upgradeGun();
+                score -= 5000;
+            }
+            else
+                System.out.println("Best Gun Already!");
+        }else
+            System.out.println("Insufficient Score!");
+    }
+
+    private void increaseScore(int _score){
+        score += _score;
+        scoreEarned += _score;
+    }
+
+    private void checkTankAlive()
+    {
+        if(tank.isDestroyed())
+            App.gameState = App.END;
+    }
+
+    private void checkNextLevel()
+    {
+        if (invaders.getInvadersLeft() <= 0)
+            App.gameState = App.NEXT;
+    }
+
+    public int getScoreEarned() {
+        return scoreEarned;
+    }
+
+    public int getScore(){
+        return score;
     }
 }

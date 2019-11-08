@@ -16,7 +16,6 @@ public class Projectile implements Destroyable{
         this.img = img;
     }
 
-    @Override
     public boolean isDestroyed() {
         if(health <= 0)
             return true;
@@ -26,7 +25,6 @@ public class Projectile implements Destroyable{
 
     public void hit(int attackPoint) {
         health -= attackPoint ;
-        // x = 700;
     }
 
     public void show() {
@@ -39,7 +37,6 @@ public class Projectile implements Destroyable{
                 y -= speed;
             else
                 y += speed;
-            // System.out.println("Current Bullet -> [ " + x + ", " + y + " ]");
         }
         else
             x = 700;

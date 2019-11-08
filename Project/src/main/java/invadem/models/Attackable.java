@@ -10,7 +10,7 @@ public class Attackable {
     protected float x, y;
     protected int attackPoint; // 攻击力
     protected int attackSpeed;
-    private PImage bulletImg;
+    protected PImage bulletImg;
 
 
     public Attackable(float x, float y, int attackPoint, int attackSpeed, PImage bulletImg) {

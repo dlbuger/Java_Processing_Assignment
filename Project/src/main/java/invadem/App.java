@@ -50,7 +50,7 @@ public class App extends PApplet {
     private boolean[] keys;
     private PFont startFont;
     private PFont UIFont;
-    
+
     public void setup() {
         // Load Images Here
         frameRate(60);
@@ -88,6 +88,12 @@ public class App extends PApplet {
     public App() {
         game = this;
     }
+
+    public void settings() {
+        size(SIZE_X, SIZE_Y);
+        // debug();
+    }
+
     private void buildObjects() {
         tank = new Tank(tankImage,320,450);
         if(debug) {
@@ -101,10 +107,7 @@ public class App extends PApplet {
         startFont = createFont("PressStart2P-Regular.tff", 24, true);
         UIFont = createFont("PressStart2P-Regular.tff", 16, true);
     }
-    public void settings() {
-        size(SIZE_X, SIZE_Y);
-        // debug();
-    }
+
     public void draw() {
         gameStart();
         if (gameState == ON) {
@@ -178,14 +181,17 @@ public class App extends PApplet {
         judge.check();
     }
     private void nextLevel() {
-        System.out.println("[NEXT LEVEL!!!]");
+        int currentTankAttackSpeed = tank.getAttackSpeed();
+        int currentTankHealth = tank.getHealth();
+        int currentTankGunNum = tank.getGunNum();
         if(level < 3)
             barriers = new Barriers(leftBarriers, topBarriers, rightBarriers, solidBarriers);
         invaders = new Invaders(regularInvaderImg, powerInvaderImg, armouredInvaderImg, 180, 20);
-        if(level < 4)
-            tank = new Tank(tankImage, 320, 450);
+        tank = new Tank(tankImage, 320, 450);
         if(level >= 4)
-            tank.setHealth(tank.getHealth() + 1);
+            tank.setHealth(currentTankHealth + 1);
+        tank.setAttackSpeed(currentTankAttackSpeed);
+        tank.setGunNum(currentTankGunNum);
         if(debug) {
             tank.setAttackSpeed(0);
             tank.setHealth(10);
@@ -198,8 +204,8 @@ public class App extends PApplet {
         background(0);
         image(_gameOver, (SIZE_X - _gameOver.width) / 2, 200);
         int score = 10000;
-        if(judge.getHitCount() > score) {
-            score = judge.getHitCount();
+        if(judge.getScoreEarned() > score) {
+            score = judge.getScoreEarned();
             textAlign(CENTER,CENTER);
             fill(255);
             textFont(UIFont);
@@ -229,6 +235,21 @@ public class App extends PApplet {
             if(debug)
                 if(keyCode == BACKSPACE)
                     judge.nuke();
+        skills();
+    }
+
+    private void skills()
+    {
+        if(key == '1')
+            judge.repairBarrier(0);
+        if(key == '2')
+            judge.repairBarrier(1);
+        if(key == '3')
+            judge.repairBarrier(2);
+        if(key == 'n')
+            judge.increaseFireSpeed();
+        if(key == 'm')
+            judge.upgradeGun();
     }
     // UI
     private void drawUI() {
@@ -236,10 +257,13 @@ public class App extends PApplet {
         drawTankInfo();
         drawInvadersLeft();
         drawLevel();
-        if(judge.getHitCount() >= 10000 && judge.getHitCount() <= 10300){
+        drawSkills();
+        int tick = frameCount;
+        if(judge.getScoreEarned() >= 10000 && judge.getScoreEarned() <= 10500){
             fill(255);
             textFont(UIFont);
-            text("Congratulation, new Skill <Chain Reaction> is usable!", SIZE_X/2, 300);
+            text(" <Chain Reaction> is activated!", SIZE_X/2, 230);
+            text("When you kill one invader, 40% another will be destroyed.",SIZE_X/2, 255);
         }
         if(debug)
             showDebug();
@@ -249,44 +273,120 @@ public class App extends PApplet {
         for (int i = 0; i < tank.getHealth(); i++) {
             fill(255);
             textFont(UIFont);
-            text("Tank   HP", 55, 20);
+            text("Tank   HP : "+ tank.getHealth(), 60, 20);
             fill(246, 70, 91);
             textFont(UIFont);
             text("-", 20 + i * 10, 35);
         }
-    }
-    private void drawInvaderHitCount() {
         fill(255);
-        textSize(14);
         textFont(UIFont);
-        text("Points Earned:", 555, 20);
-        text(judge.getHitCount() + "", 565, 35);
+        text("Fire Gap:\n" + tank.getAttackSpeed(), 560, 450);
     }
+
+    private void drawSkills()
+    {
+        // Chain Reaction
+        if(judge.getScoreEarned() <= 1000)
+            drawRed_O(473,353);
+        else
+            drawGreen_O(473,353);
+        text("<Chain Reaction>", 560, 350);
+
+        //  Repair Barriers
+        if(judge.getScore() >= 5000)
+            drawGreen_O(473,328);
+        else
+            drawRed_O(473,328);
+        text("<Repair Barriers>", 560,325);
+
+        // Fire Speed
+        if(judge.getScore() >= 7000)
+            drawGreen_O(473, 278);
+        else
+            drawRed_O(473,278);
+        if(tank.getAttackSpeed() == 0)
+            drawBlue_O(473,278);
+        text("Upgrade FireRate",560,275);
+
+        // Gun Power
+        if(tank.getGunNum() == 1 && judge.getScore() <= 5000)
+            drawRed_O(473,303);
+        else if(tank.getGunNum() == 1 && judge.getScore() >= 5000)
+            drawGreen_O(473,303);
+        else if(tank.getGunNum() == 2)
+            drawBlue_O(473,303);
+        text("< Upgrade Gun >", 560, 300);
+
+    }
+
+    private void drawRed_O(int x, int y) {
+        fill(255,102,102);
+        ellipse(x,y,10,10);
+        fill(130);
+    }
+
+    private void drawGreen_O(int x, int y){
+        fill(122,255,122);
+        ellipse(x,y,10,10);
+        fill(255);
+    }
+
+    private void drawBlue_O(int x, int y){
+        fill(51,153,255);
+        ellipse(x,y,10,10);
+        fill(255);
+
+    }
+
+    private void drawInvaderHitCount() {
+        int scoreUsed = judge.getScoreEarned() - judge.getScore();
+        int x = 5;
+        if(judge.getScoreEarned() != 0){
+            fill(51,153,255);
+            stroke(0,0f);
+            rect(525,40,100 * judge.getScore() / judge.getScoreEarned(),20);
+            fill(255,102,102);
+            rect(525 + 100 * judge.getScore() / judge.getScoreEarned() , 40,100 * scoreUsed / judge.getScoreEarned()  , 20);
+        }
+        else{
+            fill(51,153,255);
+            stroke(0,0f);
+            rect(525,40,50,20);
+            fill(255,102,102);
+            rect(575,40,50,20);
+        }
+        fill(255);
+        rect(525,60,100,7);
+        textFont(UIFont);
+        textSize(16);
+        text(judge.getScoreEarned(),575,23);
+    }
+
     private void drawInvadersLeft()
     {
         fill(255);
         textSize(14);
         textFont(UIFont);
-        text(invaders.getInvadersLeft() + "  Enimes left" ,310 , 20);
+        text(invaders.getInvadersLeft() + "\nInvaders left" ,70 , 445);
     }
     private void showDebug()
     {
         fill(255);
         textSize(14);
         textFont(UIFont);
-        text("Invaders Attack \nSpeed: " + invadersAttackSpeed, 70, 440);
         text("Bullets Count:", 70, 60);
-        text(tank.getBullets().size() + "", 60,85);
-        text("Tick: " + frameCount, 580, 460);
+        text(tank.getBullets().size() + "", 65,80);
+        text("Invaders Attack \nSpeed: " + invadersAttackSpeed, 70, 115);
         text("Debug Mode", 65,250);
-        text("<BackSpace> \nNUKE", 65, 290);
+        text("<BackSpace> \nNUKE", 65, 285);
+        text("Tick: " + frameCount, 65, 230);
     }
     private void drawLevel()
     {
         fill(255);
         textSize(14);
         textFont(UIFont);
-        text("Level " + level ,310 , 40);
+        text("Level " + level ,310 , 20);
     }
     private void debug()
     {
