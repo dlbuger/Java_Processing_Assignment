@@ -32,8 +32,6 @@ public class Invaders{
     private void setupInvaders() {
         int _tmpX = 0;
         int _tmpY = 0;
-
-        // Setup Regular Invaders
         for(int i = 0; i < invadersLeft; i++) {
             if (i % 10 == 0) {
                 _tmpY ++;
@@ -45,21 +43,19 @@ public class Invaders{
                 invaders.add(new PowerInvader(powerImg, startX + _tmpX * 30, startY + _tmpY * 30));
             if(i >= 20)
                 invaders.add(new RegularInvader(regularImg, startX + _tmpX * 30, startY + _tmpY * 30));
-
             _tmpX++;
         }
     }
 
     public void groupAttack() {
-//        // ToDo 随机出几个Invaders发射子弹
-//        Random r = new Random();
-//        int numOfBullets = r.nextInt(7);
-//        int number;
-//        for(int i = 0; i < numOfBullets; i++) {
-//            number = r.nextInt(40);
-//            invaders.get(number).attack();
-//            bullets.add(invaders.get(number).getBullets().getLast());
-//        }
+        Random r = new Random();
+        int numOfBullets = r.nextInt(7);
+        int number;
+        for(int i = 0; i < numOfBullets; i++) {
+            number = r.nextInt(40);
+            invaders.get(number).attack();
+            bullets.add(invaders.get(number).getBullets().getLast());
+        }
     }
 
     public void showGroup() {
@@ -68,8 +64,8 @@ public class Invaders{
     }
 
     public void moveGroup() {
-//        for(Invader o: invaders)
-//            o.move();
+        for(Invader o: invaders)
+            o.move();
     }
 
     public LinkedList<Invader> getInvaders() {

@@ -183,7 +183,6 @@ public class App extends PApplet {
     private void nextLevel() {
         int currentTankAttackSpeed = tank.getAttackSpeed();
         int currentTankHealth = tank.getHealth();
-        int currentTankGunNum = tank.getGunNum();
         if(level < 3)
             barriers = new Barriers(leftBarriers, topBarriers, rightBarriers, solidBarriers);
         invaders = new Invaders(regularInvaderImg, powerInvaderImg, armouredInvaderImg, 180, 20);
@@ -191,7 +190,6 @@ public class App extends PApplet {
         if(level >= 4)
             tank.setHealth(currentTankHealth + 1);
         tank.setAttackSpeed(currentTankAttackSpeed);
-        tank.setGunNum(currentTankGunNum);
         if(debug) {
             tank.setAttackSpeed(0);
             tank.setHealth(10);
@@ -248,8 +246,6 @@ public class App extends PApplet {
             judge.repairBarrier(2);
         if(key == 'n')
             judge.increaseFireSpeed();
-        if(key == 'm')
-            judge.upgradeGun();
     }
     // UI
     private void drawUI() {
@@ -258,7 +254,6 @@ public class App extends PApplet {
         drawInvadersLeft();
         drawLevel();
         drawSkills();
-        int tick = frameCount;
         if(judge.getScoreEarned() >= 10000 && judge.getScoreEarned() <= 10500){
             fill(255);
             textFont(UIFont);
@@ -273,10 +268,10 @@ public class App extends PApplet {
         for (int i = 0; i < tank.getHealth(); i++) {
             fill(255);
             textFont(UIFont);
-            text("Tank   HP : "+ tank.getHealth(), 60, 20);
+            text("Tank   HP : "+ tank.getHealth(), 60, 30);
             fill(246, 70, 91);
-            textFont(UIFont);
-            text("-", 20 + i * 10, 35);
+            noStroke();
+            rect( 15 + i * 12, 55,10,4,1f);
         }
         fill(255);
         textFont(UIFont);
@@ -285,12 +280,14 @@ public class App extends PApplet {
 
     private void drawSkills()
     {
-        // Chain Reaction
-        if(judge.getScoreEarned() <= 1000)
-            drawRed_O(473,353);
+        // Fire Speed
+        if(judge.getScore() >= 7000)
+            drawGreen_O(473, 303);
         else
-            drawGreen_O(473,353);
-        text("<Chain Reaction>", 560, 350);
+            drawRed_O(473,303);
+        if(tank.getAttackSpeed() == 0)
+            drawBlue_O(473,303);
+        text("Upgrade FireRate",560,300);
 
         //  Repair Barriers
         if(judge.getScore() >= 5000)
@@ -299,24 +296,12 @@ public class App extends PApplet {
             drawRed_O(473,328);
         text("<Repair Barriers>", 560,325);
 
-        // Fire Speed
-        if(judge.getScore() >= 7000)
-            drawGreen_O(473, 278);
+        // Chain Reaction
+        if(judge.getScoreEarned() <= 10000)
+            drawRed_O(473,353);
         else
-            drawRed_O(473,278);
-        if(tank.getAttackSpeed() == 0)
-            drawBlue_O(473,278);
-        text("Upgrade FireRate",560,275);
-
-        // Gun Power
-        if(tank.getGunNum() == 1 && judge.getScore() <= 5000)
-            drawRed_O(473,303);
-        else if(tank.getGunNum() == 1 && judge.getScore() >= 5000)
-            drawGreen_O(473,303);
-        else if(tank.getGunNum() == 2)
-            drawBlue_O(473,303);
-        text("< Upgrade Gun >", 560, 300);
-
+            drawBlue_O(473,353);
+        text("<Chain Reaction>", 560, 350);
     }
 
     private void drawRed_O(int x, int y) {

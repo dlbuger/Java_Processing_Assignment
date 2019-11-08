@@ -188,18 +188,6 @@ public class Judge {
             System.out.println("Insufficient Score!");
     }
 
-    public void upgradeGun(){
-        if(score >= 5000) {
-            if(tank.getGunNum() == 1) {
-                tank.upgradeGun();
-                score -= 5000;
-            }
-            else
-                System.out.println("Best Gun Already!");
-        }else
-            System.out.println("Insufficient Score!");
-    }
-
     private void increaseScore(int _score){
         score += _score;
         scoreEarned += _score;
