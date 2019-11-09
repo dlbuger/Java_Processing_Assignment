@@ -168,7 +168,6 @@ public class App extends PApplet {
     private void gameOn() {
         background(0);
         drawUI();
-
         barriers.showGroup();
         invaders.showGroup();
         if(!debug)

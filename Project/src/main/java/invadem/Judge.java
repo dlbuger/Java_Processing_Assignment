@@ -174,6 +174,9 @@ public class Judge {
         }
         else
             System.out.println("Insufficient Score!");
+        if(!barriers.getBarriers()[index].isAllDestroyed())
+            System.out.println("The barrier has not been Destroyed!");
+
     }
 
     public void increaseFireSpeed(){
