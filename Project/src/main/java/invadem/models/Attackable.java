@@ -33,4 +33,8 @@ public class Attackable {
     public LinkedList<Projectile> getBullets(){
         return bullets;
     }
+
+    public int getAttackPoint(){
+        return attackPoint;
+    }
 }

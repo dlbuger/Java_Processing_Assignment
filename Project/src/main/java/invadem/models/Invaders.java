@@ -80,7 +80,7 @@ public class Invaders{
         invadersLeft--;
     }
 
-    public int getInvadersLeft()
+    public int getInvadersRemain()
     {
         return invadersLeft;
     }

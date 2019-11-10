@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="invadem.TankTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2019-11-10T13:13:33" hostname="Z390" time="0.002">
+  <properties/>
+  <testcase name="testTankHealth1" classname="invadem.TankTest" time="0.001"/>
+  <testcase name="testTankHealth2" classname="invadem.TankTest" time="0.0"/>
+  <testcase name="testTankHealth3" classname="invadem.TankTest" time="0.0"/>
+  <testcase name="TestTankMoveLeft" classname="invadem.TankTest" time="0.0"/>
+  <testcase name="testTankIsDead" classname="invadem.TankTest" time="0.0"/>
+  <testcase name="testTankProjectile" classname="invadem.TankTest" time="0.0"/>
+  <testcase name="TestTankMoveRight" classname="invadem.TankTest" time="0.0"/>
+  <testcase name="testTankAttackSpeed" classname="invadem.TankTest" time="0.0"/>
+  <testcase name="testTankIsNotDead" classname="invadem.TankTest" time="0.0"/>
+  <testcase name="TestTankAttackPoint" classname="invadem.TankTest" time="0.0"/>
+  <system-out><![CDATA[[ Tank is hit ]
+[ Tank is hit ]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

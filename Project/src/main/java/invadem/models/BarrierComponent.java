@@ -58,9 +58,4 @@ public class BarrierComponent implements Destroyable{
     public int getHealth() {
         return health;
     }
-
-    @Override
-    public int getAttackPoint() {
-        return 1;
-    }
 }

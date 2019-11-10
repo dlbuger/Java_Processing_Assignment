@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project</a> &gt; <a href="index.source.html" class="el_package">invadem</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package invadem;
+
+import processing.core.PApplet;
+import processing.core.PFont;
+import processing.core.PImage;
+
+import invadem.models.*;
+
+
+
+public class App extends PApplet {
+    public static PApplet game;
+
+    //
+    public static final int START = 2;
+    public static final int ON = 1;
+    public static final int END = 0;
+    public static final int NEXT = 3;
+
+<span class="fc" id="L20">    public static int gameState = START;</span>
+<span class="nc" id="L21">    private final int SIZE_X = 640;</span>
+<span class="nc" id="L22">    private final int SIZE_Y = 480;</span>
+<span class="nc" id="L23">    private int timeCheck = millis();</span>
+<span class="nc" id="L24">    private int timeCheck4Tank = millis();</span>
+<span class="nc" id="L25">    private int invadersAttackSpeed = 3000;</span>
+<span class="nc" id="L26">    private int level = 1;</span>
+<span class="nc" id="L27">    private boolean debug = false;</span>
+    // Images
+    public static PImage regularBullet;
+    public static PImage powerBullet;
+    private PImage _gameOver;
+    private PImage _nextLevel;
+    private PImage tankImage;
+<span class="nc" id="L34">    private PImage[] leftBarriers = new PImage[3];</span>
+<span class="nc" id="L35">    private PImage[] topBarriers = new PImage[3];</span>
+<span class="nc" id="L36">    private PImage[] rightBarriers = new PImage[3];</span>
+<span class="nc" id="L37">    private PImage[] solidBarriers = new PImage[3];</span>
+
+
+<span class="fc" id="L40">    public static PImage[] regularInvaderImg = new PImage[2];</span>
+<span class="nc" id="L41">    private PImage[] powerInvaderImg = new PImage[2];</span>
+<span class="nc" id="L42">    private PImage[] armouredInvaderImg = new PImage[2];</span>
+
+    // Objects
+    private Tank tank;
+    private Barriers barriers;
+    private Invaders invaders;
+    private Judge judge;
+
+    private boolean[] keys;
+    private PFont startFont;
+    private PFont UIFont;
+
+    public void setup() {
+        // Load Images Here
+<span class="nc" id="L56">        frameRate(60);</span>
+<span class="nc" id="L57">        regularBullet = loadImage(&quot;projectile.png&quot;);</span>
+<span class="nc" id="L58">        powerBullet = loadImage(&quot;projectile_lg.png&quot;);</span>
+<span class="nc" id="L59">        _gameOver = loadImage(&quot;gameover.png&quot;);</span>
+<span class="nc" id="L60">        _nextLevel = loadImage(&quot;nextlevel.png&quot;);</span>
+<span class="nc" id="L61">        tankImage = loadImage(&quot;tank1.png&quot;);</span>
+        // Barriers Images
+<span class="nc" id="L63">        leftBarriers[0] = loadImage(&quot;barrier_left3.png&quot;);</span>
+<span class="nc" id="L64">        leftBarriers[1] = loadImage(&quot;barrier_left2.png&quot;);</span>
+<span class="nc" id="L65">        leftBarriers[2] = loadImage(&quot;barrier_left1.png&quot;);</span>
+
+<span class="nc" id="L67">        topBarriers[0] = loadImage(&quot;barrier_top3.png&quot;);</span>
+<span class="nc" id="L68">        topBarriers[1] = loadImage(&quot;barrier_top2.png&quot;);</span>
+<span class="nc" id="L69">        topBarriers[2] = loadImage(&quot;barrier_top1.png&quot;);</span>
+
+<span class="nc" id="L71">        rightBarriers[0] = loadImage(&quot;barrier_right3.png&quot;);</span>
+<span class="nc" id="L72">        rightBarriers[1] = loadImage(&quot;barrier_right2.png&quot;);</span>
+<span class="nc" id="L73">        rightBarriers[2] = loadImage(&quot;barrier_right1.png&quot;);</span>
+
+<span class="nc" id="L75">        solidBarriers[0] = loadImage(&quot;barrier_solid3.png&quot;);</span>
+<span class="nc" id="L76">        solidBarriers[1] = loadImage(&quot;barrier_solid2.png&quot;);</span>
+<span class="nc" id="L77">        solidBarriers[2] = loadImage(&quot;barrier_solid1.png&quot;);</span>
+
+        // Invaders Images
+<span class="nc" id="L80">        regularInvaderImg[0] = loadImage(&quot;invader1.png&quot;);</span>
+<span class="nc" id="L81">        regularInvaderImg[1] = loadImage(&quot;invader2.png&quot;);</span>
+<span class="nc" id="L82">        powerInvaderImg[0] = loadImage(&quot;invader1_power.png&quot;);</span>
+<span class="nc" id="L83">        powerInvaderImg[1] = loadImage(&quot;invader2_power.png&quot;);</span>
+<span class="nc" id="L84">        armouredInvaderImg[0] = loadImage(&quot;invader1_armoured.png&quot;);</span>
+<span class="nc" id="L85">        armouredInvaderImg[1] = loadImage(&quot;invader2_armoured.png&quot;);</span>
+<span class="nc" id="L86">        buildObjects();</span>
+<span class="nc" id="L87">    }</span>
+<span class="nc" id="L88">    public App() {</span>
+<span class="nc" id="L89">        game = this;</span>
+<span class="nc" id="L90">    }</span>
+
+    public void settings() {
+<span class="nc" id="L93">        size(SIZE_X, SIZE_Y);</span>
+        // debug();
+<span class="nc" id="L95">    }</span>
+
+    private void buildObjects() {
+<span class="nc" id="L98">        tank = new Tank(tankImage,320,450);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if(debug) {</span>
+<span class="nc" id="L100">            tank.setAttackSpeed(0);</span>
+<span class="nc" id="L101">            tank.setHealth(10);</span>
+        }
+<span class="nc" id="L103">        barriers = new Barriers(leftBarriers, topBarriers, rightBarriers, solidBarriers);</span>
+<span class="nc" id="L104">        invaders = new Invaders(regularInvaderImg, powerInvaderImg, armouredInvaderImg, 180, 20);</span>
+<span class="nc" id="L105">        judge = new Judge(tank, invaders, barriers);</span>
+<span class="nc" id="L106">        keys = new boolean[3];</span>
+<span class="nc" id="L107">        startFont = createFont(&quot;PressStart2P-Regular.tff&quot;, 24, true);</span>
+<span class="nc" id="L108">        UIFont = createFont(&quot;PressStart2P-Regular.tff&quot;, 16, true);</span>
+<span class="nc" id="L109">    }</span>
+
+    public void draw() {
+<span class="nc" id="L112">        gameStart();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (gameState == ON) {</span>
+<span class="nc" id="L114">            gameOn();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            if (keyPressed)</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">                if (keys[0] &amp;&amp; tank.getX() &gt;= 180)</span>
+<span class="nc" id="L117">                    tank.moveLeft();</span>
+<span class="nc bnc" id="L118" title="All 4 branches missed.">                if (keys[1] &amp;&amp; tank.getX() &lt;= 460)</span>
+<span class="nc" id="L119">                    tank.moveRight();</span>
+<span class="nc bnc" id="L120" title="All 4 branches missed.">                if (keys[2] &amp;&amp; millis() &gt; timeCheck4Tank + tank.getAttackSpeed()) {</span>
+<span class="nc" id="L121">                    tank.attack();</span>
+<span class="nc" id="L122">                    timeCheck4Tank = millis();</span>
+                }
+
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            if(invaders.getInvadersRemain() == 0)</span>
+<span class="nc" id="L126">                timeCheck = millis();</span>
+        }
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        else if (gameState == END)</span>
+<span class="nc" id="L129">            gameOver();</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        else if (gameState == NEXT) {</span>
+<span class="nc" id="L131">            background(0);</span>
+<span class="nc" id="L132">            image(_nextLevel, (SIZE_X - _gameOver.width) / 2, 200);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">            if(level &gt;= 3)</span>
+            {
+<span class="nc" id="L135">                fill(255);</span>
+<span class="nc" id="L136">                textFont(UIFont);</span>
+<span class="nc" id="L137">                text(&quot;Your Barriers will NOT be repaired&quot;, SIZE_X / 2, 250);</span>
+            }
+<span class="nc bnc" id="L139" title="All 2 branches missed.">            if(level &gt;= 4){</span>
+<span class="nc" id="L140">                fill(255);</span>
+<span class="nc" id="L141">                textFont(UIFont);</span>
+<span class="nc" id="L142">                text(&quot;Your Tank Health will NOT be reset\nBut Will your Level up,\nyou will gain 1 health&quot;, SIZE_X / 2, 300);</span>
+            }
+<span class="nc bnc" id="L144" title="All 2 branches missed.">            if(millis() &gt; timeCheck + 2000) {</span>
+<span class="nc" id="L145">                nextLevel();</span>
+<span class="nc" id="L146">                gameState = ON;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">                if(invadersAttackSpeed &gt;= 2000)</span>
+<span class="nc" id="L148">                    invadersAttackSpeed -= 1000;</span>
+            }
+        }
+<span class="nc" id="L151">    }</span>
+    // Scene
+    private void gameStart() {
+<span class="nc" id="L154">        background(255);</span>
+        //  按任意键开始游戏
+<span class="nc" id="L156">        textAlign(CENTER, TOP);</span>
+<span class="nc" id="L157">        textSize(32);</span>
+<span class="nc" id="L158">        textFont(startFont);</span>
+<span class="nc" id="L159">        fill(0);</span>
+<span class="nc" id="L160">        text(&quot;Press &lt;ENTER&gt; to start Game!&quot;, SIZE_X / 2, SIZE_Y - 100);</span>
+<span class="nc" id="L161">        textAlign(CENTER, CENTER);</span>
+<span class="nc" id="L162">        textSize(20);</span>
+<span class="nc" id="L163">        textFont(startFont);</span>
+<span class="nc" id="L164">        text(&quot;Use &lt;Arrow Key&gt; to move, &lt;SPACE&gt; to shoot!&quot;, SIZE_X / 2, SIZE_Y / 2);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (keyCode == ENTER)</span>
+<span class="nc" id="L166">            gameState = ON;</span>
+<span class="nc" id="L167">    }</span>
+    public void gameOn() {
+<span class="nc" id="L169">        background(0);</span>
+<span class="nc" id="L170">        drawUI();</span>
+<span class="nc" id="L171">        barriers.showGroup();</span>
+<span class="nc" id="L172">        invaders.showGroup();</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        if(!debug)</span>
+<span class="nc" id="L174">            invaders.moveGroup();</span>
+<span class="nc" id="L175">        tank.show();</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        if (millis() &gt; timeCheck + invadersAttackSpeed) {</span>
+<span class="nc" id="L177">            invaders.groupAttack();</span>
+<span class="nc" id="L178">            timeCheck = millis();</span>
+        }
+<span class="nc" id="L180">        judge.check();</span>
+<span class="nc" id="L181">    }</span>
+    private void nextLevel() {
+<span class="nc" id="L183">        int currentTankAttackSpeed = tank.getAttackSpeed();</span>
+<span class="nc" id="L184">        int currentTankHealth = tank.getHealth();</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        if(level &lt; 3)</span>
+<span class="nc" id="L186">            barriers = new Barriers(leftBarriers, topBarriers, rightBarriers, solidBarriers);</span>
+<span class="nc" id="L187">        invaders = new Invaders(regularInvaderImg, powerInvaderImg, armouredInvaderImg, 180, 20);</span>
+<span class="nc" id="L188">        tank = new Tank(tankImage, 320, 450);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        if(level &gt;= 4)</span>
+<span class="nc" id="L190">            tank.setHealth(currentTankHealth + 1);</span>
+<span class="nc" id="L191">        tank.setAttackSpeed(currentTankAttackSpeed);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        if(debug) {</span>
+<span class="nc" id="L193">            tank.setAttackSpeed(0);</span>
+<span class="nc" id="L194">            tank.setHealth(10);</span>
+        }
+<span class="nc" id="L196">        judge.update(tank,invaders,barriers);</span>
+<span class="nc" id="L197">        level++;</span>
+<span class="nc" id="L198">    }</span>
+    private void gameOver() {
+<span class="nc" id="L200">        noLoop();</span>
+<span class="nc" id="L201">        background(0);</span>
+<span class="nc" id="L202">        image(_gameOver, (SIZE_X - _gameOver.width) / 2, 200);</span>
+<span class="nc" id="L203">        int score = 10000;</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">        if(judge.getScoreEarned() &gt; score) {</span>
+<span class="nc" id="L205">            score = judge.getScoreEarned();</span>
+<span class="nc" id="L206">            textAlign(CENTER,CENTER);</span>
+<span class="nc" id="L207">            fill(255);</span>
+<span class="nc" id="L208">            textFont(UIFont);</span>
+<span class="nc" id="L209">            text(&quot;New Highest Record !!!&quot;, (SIZE_X) / 2, 300);</span>
+        }
+<span class="nc" id="L211">        textAlign(CENTER,CENTER);</span>
+<span class="nc" id="L212">        fill(255);</span>
+<span class="nc" id="L213">        textFont(UIFont);</span>
+<span class="nc" id="L214">        text(&quot;Current Highest Score: &quot; + score, (SIZE_X) / 2, 250);</span>
+<span class="nc" id="L215">    }</span>
+    // Control
+    public void keyPressed() {
+<span class="nc bnc" id="L218" title="All 2 branches missed.">            if (keyCode == LEFT)</span>
+<span class="nc" id="L219">                keys[0] = true;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">            if (keyCode == RIGHT)</span>
+<span class="nc" id="L221">                keys[1] = true;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">            if (key == ' ')</span>
+<span class="nc" id="L223">                keys[2] = true;</span>
+<span class="nc" id="L224">    }</span>
+    public void keyReleased() {
+<span class="nc bnc" id="L226" title="All 2 branches missed.">            if (keyCode == LEFT)</span>
+<span class="nc" id="L227">                keys[0] = false;</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">            if (keyCode == RIGHT)</span>
+<span class="nc" id="L229">                keys[1] = false;</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">            if (key == ' ')</span>
+<span class="nc" id="L231">                keys[2] = false;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">            if(debug)</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">                if(keyCode == BACKSPACE)</span>
+<span class="nc" id="L234">                    judge.nuke();</span>
+<span class="nc" id="L235">        skills();</span>
+<span class="nc" id="L236">    }</span>
+
+    private void skills()
+    {
+<span class="nc bnc" id="L240" title="All 2 branches missed.">        if(key == '1')</span>
+<span class="nc" id="L241">            judge.repairBarrier(0);</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">        if(key == '2')</span>
+<span class="nc" id="L243">            judge.repairBarrier(1);</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">        if(key == '3')</span>
+<span class="nc" id="L245">            judge.repairBarrier(2);</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">        if(key == 'n')</span>
+<span class="nc" id="L247">            judge.increaseFireSpeed();</span>
+<span class="nc" id="L248">    }</span>
+    // UI
+    private void drawUI() {
+<span class="nc" id="L251">        drawInvaderHitCount();</span>
+<span class="nc" id="L252">        drawTankInfo();</span>
+<span class="nc" id="L253">        drawInvadersLeft();</span>
+<span class="nc" id="L254">        drawLevel();</span>
+<span class="nc" id="L255">        drawSkills();</span>
+<span class="nc bnc" id="L256" title="All 4 branches missed.">        if(judge.getScoreEarned() &gt;= 10000 &amp;&amp; judge.getScoreEarned() &lt;= 10500){</span>
+<span class="nc" id="L257">            fill(255);</span>
+<span class="nc" id="L258">            textFont(UIFont);</span>
+<span class="nc" id="L259">            text(&quot; &lt;Chain Reaction&gt; is activated!&quot;, SIZE_X/2, 230);</span>
+<span class="nc" id="L260">            text(&quot;When you kill one invader, 40% another will be destroyed.&quot;,SIZE_X/2, 255);</span>
+        }
+<span class="nc bnc" id="L262" title="All 2 branches missed.">        if(debug)</span>
+<span class="nc" id="L263">            showDebug();</span>
+<span class="nc" id="L264">    }</span>
+    private void drawTankInfo()
+    {
+<span class="nc bnc" id="L267" title="All 2 branches missed.">        for (int i = 0; i &lt; tank.getHealth(); i++) {</span>
+<span class="nc" id="L268">            fill(255);</span>
+<span class="nc" id="L269">            textFont(UIFont);</span>
+<span class="nc" id="L270">            text(&quot;Tank   HP : &quot;+ tank.getHealth(), 60, 30);</span>
+<span class="nc" id="L271">            fill(246, 70, 91);</span>
+<span class="nc" id="L272">            noStroke();</span>
+<span class="nc" id="L273">            rect( 15 + i * 12, 55,10,4,1f);</span>
+        }
+<span class="nc" id="L275">        fill(255);</span>
+<span class="nc" id="L276">        textFont(UIFont);</span>
+<span class="nc" id="L277">        text(&quot;Fire Gap:\n&quot; + tank.getAttackSpeed(), 560, 450);</span>
+<span class="nc" id="L278">    }</span>
+
+    private void drawSkills()
+    {
+        // Fire Speed
+<span class="nc bnc" id="L283" title="All 2 branches missed.">        if(judge.getScore() &gt;= 7000)</span>
+<span class="nc" id="L284">            drawGreen_O(473, 303);</span>
+        else
+<span class="nc" id="L286">            drawRed_O(473,303);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">        if(tank.getAttackSpeed() == 0)</span>
+<span class="nc" id="L288">            drawBlue_O(473,303);</span>
+<span class="nc" id="L289">        text(&quot;Upgrade FireRate&quot;,560,300);</span>
+
+        //  Repair Barriers
+<span class="nc bnc" id="L292" title="All 2 branches missed.">        if(judge.getScore() &gt;= 5000)</span>
+<span class="nc" id="L293">            drawGreen_O(473,328);</span>
+        else
+<span class="nc" id="L295">            drawRed_O(473,328);</span>
+<span class="nc" id="L296">        text(&quot;&lt;Repair Barriers&gt;&quot;, 560,325);</span>
+
+        // Chain Reaction
+<span class="nc bnc" id="L299" title="All 2 branches missed.">        if(judge.getScoreEarned() &lt;= 10000)</span>
+<span class="nc" id="L300">            drawRed_O(473,353);</span>
+        else
+<span class="nc" id="L302">            drawBlue_O(473,353);</span>
+<span class="nc" id="L303">        text(&quot;&lt;Chain Reaction&gt;&quot;, 560, 350);</span>
+<span class="nc" id="L304">    }</span>
+
+    private void drawRed_O(int x, int y) {
+<span class="nc" id="L307">        fill(255,102,102);</span>
+<span class="nc" id="L308">        ellipse(x,y,10,10);</span>
+<span class="nc" id="L309">        fill(130);</span>
+<span class="nc" id="L310">    }</span>
+
+    private void drawGreen_O(int x, int y){
+<span class="nc" id="L313">        fill(122,255,122);</span>
+<span class="nc" id="L314">        ellipse(x,y,10,10);</span>
+<span class="nc" id="L315">        fill(255);</span>
+<span class="nc" id="L316">    }</span>
+
+    private void drawBlue_O(int x, int y){
+<span class="nc" id="L319">        fill(51,153,255);</span>
+<span class="nc" id="L320">        ellipse(x,y,10,10);</span>
+<span class="nc" id="L321">        fill(255);</span>
+
+<span class="nc" id="L323">    }</span>
+
+    private void drawInvaderHitCount() {
+<span class="nc" id="L326">        int scoreUsed = judge.getScoreEarned() - judge.getScore();</span>
+<span class="nc" id="L327">        int x = 5;</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">        if(judge.getScoreEarned() != 0){</span>
+<span class="nc" id="L329">            fill(51,153,255);</span>
+<span class="nc" id="L330">            stroke(0,0f);</span>
+<span class="nc" id="L331">            rect(525,40,100 * judge.getScore() / judge.getScoreEarned(),20);</span>
+<span class="nc" id="L332">            fill(255,102,102);</span>
+<span class="nc" id="L333">            rect(525 + 100 * judge.getScore() / judge.getScoreEarned() , 40,100 * scoreUsed / judge.getScoreEarned()  , 20);</span>
+        }
+        else{
+<span class="nc" id="L336">            fill(51,153,255);</span>
+<span class="nc" id="L337">            stroke(0,0f);</span>
+<span class="nc" id="L338">            rect(525,40,50,20);</span>
+<span class="nc" id="L339">            fill(255,102,102);</span>
+<span class="nc" id="L340">            rect(575,40,50,20);</span>
+        }
+<span class="nc" id="L342">        fill(255);</span>
+<span class="nc" id="L343">        rect(525,60,100,7);</span>
+<span class="nc" id="L344">        textFont(UIFont);</span>
+<span class="nc" id="L345">        textSize(16);</span>
+<span class="nc" id="L346">        text(judge.getScoreEarned(),575,23);</span>
+<span class="nc" id="L347">    }</span>
+
+    private void drawInvadersLeft()
+    {
+<span class="nc" id="L351">        fill(255);</span>
+<span class="nc" id="L352">        textSize(14);</span>
+<span class="nc" id="L353">        textFont(UIFont);</span>
+<span class="nc" id="L354">        text(invaders.getInvadersRemain() + &quot;\nInvaders left&quot; ,70 , 445);</span>
+<span class="nc" id="L355">    }</span>
+    private void showDebug()
+    {
+<span class="nc" id="L358">        fill(255);</span>
+<span class="nc" id="L359">        textSize(14);</span>
+<span class="nc" id="L360">        textFont(UIFont);</span>
+<span class="nc" id="L361">        text(&quot;Bullets Count:&quot;, 70, 60);</span>
+<span class="nc" id="L362">        text(tank.getBullets().size() + &quot;&quot;, 65,80);</span>
+<span class="nc" id="L363">        text(&quot;Invaders Attack \nSpeed: &quot; + invadersAttackSpeed, 70, 115);</span>
+<span class="nc" id="L364">        text(&quot;Debug Mode&quot;, 65,250);</span>
+<span class="nc" id="L365">        text(&quot;&lt;BackSpace&gt; \nNUKE&quot;, 65, 285);</span>
+<span class="nc" id="L366">        text(&quot;Tick: &quot; + frameCount, 65, 230);</span>
+<span class="nc" id="L367">    }</span>
+    private void drawLevel()
+    {
+<span class="nc" id="L370">        fill(255);</span>
+<span class="nc" id="L371">        textSize(14);</span>
+<span class="nc" id="L372">        textFont(UIFont);</span>
+<span class="nc" id="L373">        text(&quot;Level &quot; + level ,310 , 20);</span>
+<span class="nc" id="L374">    }</span>
+    private void debug()
+    {
+<span class="nc bnc" id="L377" title="All 2 branches missed.">        if(!debug)</span>
+<span class="nc" id="L378">            debug = true;</span>
+<span class="nc" id="L379">    }</span>
+
+    // Only used for TestCase!!
+    public Tank getTank(){
+<span class="nc" id="L383">        return tank;</span>
+    }
+    public Invaders getInvaders(){
+<span class="nc" id="L386">        return invaders;</span>
+    }
+    public Barriers getBarriers(){
+<span class="nc" id="L389">        return barriers;</span>
+    }
+    public Judge getJudge(){
+<span class="nc" id="L392">        return judge;</span>
+    }
+
+    public static void main(String[] args) {
+<span class="nc" id="L396">        PApplet.main(&quot;invadem.App&quot;);</span>
+<span class="nc" id="L397">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

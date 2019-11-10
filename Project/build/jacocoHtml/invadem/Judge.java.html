@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Judge.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project</a> &gt; <a href="index.source.html" class="el_package">invadem</a> &gt; <span class="el_source">Judge.java</span></div><h1>Judge.java</h1><pre class="source lang-java linenums">package invadem;
+
+import invadem.models.*;
+import java.util.Iterator;
+import java.util.Random;
+
+public class Judge {
+    private Tank tank;
+    private Invaders invaders;
+    private Barriers barriers;
+<span class="fc" id="L11">    private int score = 0;</span>
+<span class="fc" id="L12">    private int scoreEarned = 0;</span>
+<span class="fc" id="L13">    private int fullScore = 0;</span>
+
+
+<span class="fc" id="L16">    public Judge(Tank tank, Invaders invaders, Barriers barriers) {</span>
+<span class="fc" id="L17">        this.tank = tank;</span>
+<span class="fc" id="L18">        this.invaders = invaders;</span>
+<span class="fc" id="L19">        this.barriers = barriers;</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        for (Invader o : invaders.getInvaders())</span>
+<span class="fc" id="L21">            fullScore += o.getScore();</span>
+<span class="fc" id="L22">        System.out.println(&quot;[Full Score] --&gt; &quot; + fullScore);</span>
+<span class="fc" id="L23">    }</span>
+
+    public void update(Tank tank, Invaders invaders, Barriers barriers) {
+        //  在进入下一个level的时候传入新的invaders和barriers
+<span class="nc" id="L27">        this.invaders = invaders;</span>
+<span class="nc" id="L28">        this.barriers = barriers;</span>
+<span class="nc" id="L29">        this.tank = tank;</span>
+<span class="nc" id="L30">    }</span>
+
+    public void check() {
+<span class="nc" id="L33">        check4Tank();</span>
+<span class="nc" id="L34">        checkNextLevel();</span>
+<span class="nc" id="L35">        checkTankAlive();</span>
+<span class="nc" id="L36">        check4Invader();</span>
+<span class="nc" id="L37">        check4Crash();</span>
+<span class="nc" id="L38">        checkBulletInside();</span>
+<span class="nc" id="L39">    }</span>
+
+    public void nuke() {
+        // 用来测试是否能达成胜利条件
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        for (Invader o : invaders.getInvaders()) {</span>
+<span class="nc" id="L44">            o.hit(o.getHealth());</span>
+<span class="nc" id="L45">            invaders.invaderKilled();</span>
+<span class="nc" id="L46">        }</span>
+<span class="nc" id="L47">    }</span>
+
+    private void check4Crash() {
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for (Invader invader : invaders.getInvaders()) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            for (int i = 0; i &lt; barriers.getBarriers().length; i++)</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">                for (BarrierComponent o : barriers.getBarriers()[i].getBarrierComponents())</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">                    if (_check(invader, o)) {</span>
+<span class="nc" id="L54">                        o.hit(invader.getHealth()); // 传入子弹的攻击力</span>
+<span class="nc" id="L55">                        invader.hit(1);</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">                        if (invader.isDestroyed()) {</span>
+<span class="nc" id="L57">                            increaseScore(invader.getScore());</span>
+<span class="nc" id="L58">                            invaders.invaderKilled();</span>
+                        }
+                    }
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            if (_check(invader, tank)) {</span>
+<span class="nc" id="L62">                invader.hit(1);</span>
+<span class="nc" id="L63">                tank.hit(invader.getHealth());</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">                if (invader.isDestroyed()) {</span>
+<span class="nc" id="L65">                    increaseScore (invader.getScore());</span>
+<span class="nc" id="L66">                    invaders.invaderKilled();</span>
+                }
+            }
+<span class="nc" id="L69">        }</span>
+<span class="nc" id="L70">    }</span>
+
+    private void checkBulletInside()
+    {
+        // 不会报错
+<span class="nc" id="L75">        Iterator&lt;Projectile&gt; iterator4Invader = invaders.getBullets().iterator();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        while(iterator4Invader.hasNext()) {</span>
+<span class="nc" id="L77">            Projectile o = iterator4Invader.next();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">            if(o.getY() &gt;= App.game.height)</span>
+<span class="nc" id="L79">                iterator4Invader.remove();</span>
+<span class="nc" id="L80">        }</span>
+<span class="nc" id="L81">        Iterator&lt;Projectile&gt; iterator4Tank = tank.getBullets().iterator();</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        while(iterator4Tank.hasNext()){</span>
+<span class="nc" id="L83">            Projectile o = iterator4Tank.next();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            if(o.getY() &lt;= 0)</span>
+<span class="nc" id="L85">                iterator4Tank.remove();</span>
+<span class="nc" id="L86">        }</span>
+<span class="nc" id="L87">    }</span>
+
+
+    private void check4Tank() {
+<span class="nc" id="L91">        Iterator&lt;Projectile&gt; iterator = tank.getBullets().iterator();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        while(iterator.hasNext()) {</span>
+<span class="nc" id="L93">            Projectile bullet = iterator.next();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            for(Invader invader: invaders.getInvaders()) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                if (_check(bullet, invader)) {</span>
+<span class="nc" id="L96">                    invader.hit(bullet.getHealth());</span>
+<span class="nc" id="L97">                    bullet.hit(bullet.getHealth());</span>
+<span class="nc" id="L98">                    iterator.remove();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                    if (invader.isDestroyed()) {</span>
+<span class="nc" id="L100">                        increaseScore(invader.getScore());</span>
+<span class="nc" id="L101">                        invaders.invaderKilled();</span>
+<span class="nc" id="L102">                        Check4chainReaction();</span>
+                    }
+                }
+<span class="nc" id="L105">            }</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                if (checkBarrier(bullet)) {</span>
+<span class="nc" id="L107">                    bullet.hit(bullet.getHealth());</span>
+<span class="nc" id="L108">                    iterator.remove();</span>
+            }
+<span class="nc" id="L110">        }</span>
+<span class="nc" id="L111">    }</span>
+
+    private void check4Invader(){
+<span class="nc" id="L114">        Iterator&lt;Projectile&gt; iterator = invaders.getBullets().iterator();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        while(iterator.hasNext()){</span>
+<span class="nc" id="L116">            Projectile bullet = iterator.next();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            if(_check(bullet, tank))</span>
+            {
+<span class="nc" id="L119">                tank.hit(bullet.getHealth());</span>
+<span class="nc" id="L120">                bullet.hit(bullet.getHealth());</span>
+<span class="nc" id="L121">                iterator.remove();</span>
+            }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            if(checkBarrier(bullet)) {</span>
+<span class="nc" id="L124">                bullet.hit(bullet.getHealth());</span>
+<span class="nc" id="L125">                iterator.remove();</span>
+            }
+<span class="nc" id="L127">        }</span>
+<span class="nc" id="L128">    }</span>
+
+    private boolean _check(Destroyable bullet, Destroyable target) {
+<span class="nc" id="L131">        if(</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">                bullet.getX() &lt; (target.getX() + target.getWidth()) &amp;&amp;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                        (bullet.getX() + bullet.getWidth()) &gt; target.getX() &amp;&amp;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                        bullet.getY() &lt; (target.getY() + target.getHeight()) &amp;&amp;</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">                        (bullet.getY() + bullet.getHeight()) &gt; target.getY()</span>
+        )
+<span class="nc" id="L137">            return true;</span>
+        else
+<span class="nc" id="L139">            return false;</span>
+    }
+
+    private boolean checkBarrier(Destroyable bullet) {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        for(int i = 0; i&lt; barriers.getBarriers().length; i++)</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">            for(BarrierComponent o:barriers.getBarriers()[i].getBarrierComponents())</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">                if(_check(bullet, o)) {</span>
+<span class="nc" id="L146">                    o.hit(bullet.getHealth()); // 传入子弹的攻击力</span>
+<span class="nc" id="L147">                    return true;</span>
+                }
+<span class="nc" id="L149">        return false;</span>
+    }
+
+    private void Check4chainReaction()
+    {
+<span class="nc" id="L154">        Random r = new Random();</span>
+<span class="nc" id="L155">        int condition = r.nextInt(10);</span>
+<span class="nc bnc" id="L156" title="All 4 branches missed.">        if (condition &gt; 6 &amp;&amp; scoreEarned &gt; 10000) {</span>
+            //  40% TO Active chain Reaction! Rate will decrease when invaders are killed
+<span class="nc" id="L158">            System.out.println(&quot;Chain Reaction!&quot;);</span>
+<span class="nc" id="L159">            r = new Random();</span>
+<span class="nc" id="L160">            int _index = r.nextInt(40);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            if(!invaders.getInvaders().get(_index).isDestroyed()){</span>
+<span class="nc" id="L162">                invaders.getInvaders().get(_index).hit(invaders.getInvaders().get(_index).getHealth());</span>
+<span class="nc" id="L163">                score += invaders.getInvaders().get(_index).getScore();</span>
+<span class="nc" id="L164">                invaders.invaderKilled();</span>
+            }
+        }
+<span class="nc" id="L167">    }</span>
+
+    public void repairBarrier(int index)
+    {
+<span class="nc bnc" id="L171" title="All 4 branches missed.">        if(barriers.getBarriers()[index].isAllDestroyed() &amp;&amp; score &gt;= 5000) {</span>
+<span class="nc" id="L172">            barriers.repairBarrier(index);</span>
+<span class="nc" id="L173">            score -= 5000;</span>
+        }
+        else
+<span class="nc" id="L176">            System.out.println(&quot;Insufficient Score!&quot;);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if(!barriers.getBarriers()[index].isAllDestroyed())</span>
+<span class="nc" id="L178">            System.out.println(&quot;The barrier has not been Destroyed!&quot;);</span>
+
+<span class="nc" id="L180">    }</span>
+
+    public void increaseFireSpeed(){
+<span class="nc bnc" id="L183" title="All 4 branches missed.">        if(score &gt;= 7000 &amp;&amp; tank.getAttackSpeed() != 0) {</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (tank.getAttackSpeed() - 15 &gt;= 0)</span>
+<span class="nc" id="L185">                tank.setAttackSpeed(tank.getAttackSpeed() - 15);</span>
+            else
+<span class="nc" id="L187">                tank.setAttackSpeed(0);</span>
+<span class="nc" id="L188">            score -= 7000;</span>
+        }
+        else
+<span class="nc" id="L191">            System.out.println(&quot;Insufficient Score!&quot;);</span>
+<span class="nc" id="L192">    }</span>
+
+    private void increaseScore(int _score){
+<span class="nc" id="L195">        score += _score;</span>
+<span class="nc" id="L196">        scoreEarned += _score;</span>
+<span class="nc" id="L197">    }</span>
+
+    private void checkTankAlive()
+    {
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if(tank.isDestroyed())</span>
+<span class="nc" id="L202">            App.gameState = App.END;</span>
+<span class="nc" id="L203">    }</span>
+
+    private void checkNextLevel()
+    {
+<span class="nc bnc" id="L207" title="All 2 branches missed.">        if (invaders.getInvadersRemain() &lt;= 0)</span>
+<span class="nc" id="L208">            App.gameState = App.NEXT;</span>
+<span class="nc" id="L209">    }</span>
+
+    public int getScoreEarned() {
+<span class="nc" id="L212">        return scoreEarned;</span>
+    }
+
+    public int getScore(){
+<span class="nc" id="L216">        return score;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

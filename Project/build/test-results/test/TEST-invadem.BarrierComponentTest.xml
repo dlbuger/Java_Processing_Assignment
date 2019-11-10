@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="invadem.BarrierComponentTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2019-11-10T13:13:33" hostname="Z390" time="0.012">
+  <properties/>
+  <testcase name="TestBarrierSetLocation" classname="invadem.BarrierComponentTest" time="0.01"/>
+  <testcase name="TestBarrierComponentDestroyed" classname="invadem.BarrierComponentTest" time="0.0"/>
+  <testcase name="testBarrierComponentHitPointsMax1" classname="invadem.BarrierComponentTest" time="0.0"/>
+  <testcase name="testBarrierComponentHitPointsMax2" classname="invadem.BarrierComponentTest" time="0.0"/>
+  <testcase name="testBarrierComponentHitPointsMax3" classname="invadem.BarrierComponentTest" time="0.0"/>
+  <testcase name="testBarrierIsDestroyed" classname="invadem.BarrierComponentTest" time="0.0"/>
+  <testcase name="testBarrierComponentNotDestroyed" classname="invadem.BarrierComponentTest" time="0.0"/>
+  <testcase name="TestBarrierComponentHealth1" classname="invadem.BarrierComponentTest" time="0.0"/>
+  <testcase name="TestBarrierComponentHealth2" classname="invadem.BarrierComponentTest" time="0.001"/>
+  <testcase name="TestBarrierComponentHealth3" classname="invadem.BarrierComponentTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

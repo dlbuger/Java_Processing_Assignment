@@ -11,7 +11,6 @@ public class Tank extends Attackable implements Destroyable {
     private int moveSpeed;
     private int health;
     private PImage img;
-    private int attackPoint = 1;
 
 // 320, 450
     public Tank(PImage img, int x, int y) {
@@ -78,10 +77,6 @@ public class Tank extends Attackable implements Destroyable {
     public int getHealth()
     {
         return health;
-    }
-    public int getAttackPoint()
-    {
-        return attackPoint;
     }
     public LinkedList<Projectile> getBullets() {
         return bullets;

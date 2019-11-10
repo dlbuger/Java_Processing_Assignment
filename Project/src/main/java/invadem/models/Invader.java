@@ -23,7 +23,7 @@ public class Invader extends Attackable implements Destroyable{
         if (y > 480 - imgs[0].height)
             trigerGameOver();
         else if (health  > 0)
-            trigerGameOn();
+            gameOn();
         else if (health <= 0){
             x = 800;
             y = 0;
@@ -43,7 +43,7 @@ public class Invader extends Attackable implements Destroyable{
         App.gameState = App.END;
     }
 
-    private void trigerGameOn() {
+    private void gameOn() {
         for(Projectile o:bullets) {
             o.show();
             o.move(false);
@@ -89,9 +89,5 @@ public class Invader extends Attackable implements Destroyable{
 
     public int getHealth() {
         return health;
-    }
-
-    public int getAttackPoint() {
-        return attackPoint;
     }
 }

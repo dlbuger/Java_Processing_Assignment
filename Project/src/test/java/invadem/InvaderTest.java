@@ -42,4 +42,16 @@ public class InvaderTest {
         assertEquals(250, inv2.getScore());
         assertEquals(250, inv3.getScore());
     }
+
+    @Test
+    public void testInvaderMove(){
+        Invader o = new RegularInvader(null, 0, 0);
+        assertEquals(0,o.getX());
+        assertEquals(0,o.getY());
+        for(int i = 0; i < 300; i++)
+            o.move();
+        assertNotEquals(0,o.getX());
+        assertNotEquals(0,o.getY());
+    }
+
 }

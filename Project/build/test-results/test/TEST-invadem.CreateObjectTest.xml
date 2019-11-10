@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="invadem.CreateObjectTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2019-11-10T13:13:33" hostname="Z390" time="0.006">
+  <properties/>
+  <testcase name="TestCreateArmouredInvader" classname="invadem.CreateObjectTest" time="0.0"/>
+  <testcase name="TestCreateProjectile" classname="invadem.CreateObjectTest" time="0.0"/>
+  <testcase name="TestCreateBarrier" classname="invadem.CreateObjectTest" time="0.0"/>
+  <testcase name="TestCreateTank" classname="invadem.CreateObjectTest" time="0.0"/>
+  <testcase name="TestCreateBarriers" classname="invadem.CreateObjectTest" time="0.0"/>
+  <testcase name="TestCreateRegularInvader" classname="invadem.CreateObjectTest" time="0.0"/>
+  <testcase name="TestCreatePowerInvader" classname="invadem.CreateObjectTest" time="0.0"/>
+  <testcase name="TestCreateBarrierComponent" classname="invadem.CreateObjectTest" time="0.0"/>
+  <testcase name="TestCreateJudge" classname="invadem.CreateObjectTest" time="0.005"/>
+  <testcase name="TestCreateInvaders" classname="invadem.CreateObjectTest" time="0.0"/>
+  <system-out><![CDATA[[Full Score] --> 7000
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

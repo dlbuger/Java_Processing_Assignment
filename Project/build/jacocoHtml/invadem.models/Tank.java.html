@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tank.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project</a> &gt; <a href="index.source.html" class="el_package">invadem.models</a> &gt; <span class="el_source">Tank.java</span></div><h1>Tank.java</h1><pre class="source lang-java linenums">package invadem.models;
+
+import invadem.App;
+import processing.core.PImage;
+import java.util.LinkedList;
+
+import static invadem.App.game;
+
+public class Tank extends Attackable implements Destroyable {
+
+    private int moveSpeed;
+    private int health;
+    private PImage img;
+
+// 320, 450
+    public Tank(PImage img, int x, int y) {
+<span class="fc" id="L17">        super(x, y, 1,80, App.regularBullet);</span>
+<span class="fc" id="L18">        health = 3;</span>
+<span class="fc" id="L19">        this.img = img;</span>
+<span class="fc" id="L20">        moveSpeed = 3;</span>
+<span class="fc" id="L21">    }</span>
+
+    public void show() {
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if(!isDestroyed()) {</span>
+            // Show Tank
+<span class="nc" id="L26">            game.image(img,x,y);</span>
+            // Show Bullets
+<span class="nc bnc" id="L28" title="All 2 branches missed.">            for (Projectile b:bullets)</span>
+<span class="nc" id="L29">                b.show();</span>
+            // Bullets moving
+<span class="nc bnc" id="L31" title="All 2 branches missed.">            for (Projectile b: bullets)</span>
+<span class="nc" id="L32">                b.move(true);</span>
+        }
+<span class="nc" id="L34">    }</span>
+
+    public void moveLeft() {
+<span class="fc" id="L37">        x -= moveSpeed;</span>
+<span class="fc" id="L38">    }</span>
+
+    public void moveRight() {
+<span class="fc" id="L41">        x += moveSpeed;</span>
+<span class="fc" id="L42">    }</span>
+
+
+    public void hit(int attackPoint) {
+<span class="fc" id="L46">        health -=  attackPoint;</span>
+<span class="fc" id="L47">        System.out.println(&quot;[ Tank is hit ]&quot;);</span>
+<span class="fc" id="L48">    }</span>
+    public boolean isDestroyed() {
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if(health &lt;= 0)</span>
+<span class="fc" id="L51">            return true;</span>
+        else
+<span class="fc" id="L53">            return false;</span>
+    }
+
+    public void setAttackSpeed(int a){
+<span class="fc" id="L57">        attackSpeed = a;</span>
+<span class="fc" id="L58">    }</span>
+
+    public void setHealth(int a) {
+<span class="fc" id="L61">        health = a;</span>
+<span class="fc" id="L62">    }</span>
+
+
+    public int getX() {
+<span class="fc" id="L66">        return (int)x;</span>
+    }
+    public int getY() {
+<span class="fc" id="L69">        return (int)y;</span>
+    }
+    public int getWidth() {
+<span class="nc" id="L72">        return img.width;</span>
+    }
+    public int getHeight() {
+<span class="nc" id="L75">        return (int)y;</span>
+    }
+    public int getHealth()
+    {
+<span class="fc" id="L79">        return health;</span>
+    }
+    public LinkedList&lt;Projectile&gt; getBullets() {
+<span class="fc" id="L82">        return bullets;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

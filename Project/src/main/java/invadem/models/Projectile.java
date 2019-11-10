@@ -38,8 +38,6 @@ public class Projectile implements Destroyable{
             else
                 y += speed;
         }
-        else
-            x = 700;
     }
 
     public int getY() {
@@ -58,9 +56,6 @@ public class Projectile implements Destroyable{
         return (int)x;
     }
     public int getHealth() {
-        return health;
-    }
-    public int getAttackPoint() {
         return health;
     }
 

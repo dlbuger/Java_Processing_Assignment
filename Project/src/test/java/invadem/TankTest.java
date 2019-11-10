@@ -70,4 +70,9 @@ public class TankTest {
         assertTrue(t.getX() < 50);
     }
 
+    @Test
+    public void TestTankAttackPoint(){
+        Tank t = new Tank(null, 50, 50);
+        assertEquals(1, t.getAttackPoint());
+    }
 }

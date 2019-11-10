@@ -8,5 +8,4 @@ public interface Destroyable {
     public int getWidth();
     public int getHeight();
     public int getHealth();
-    public int getAttackPoint();
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="invadem.InvadersTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-11-10T13:13:33" hostname="Z390" time="0.001">
+  <properties/>
+  <testcase name="testInvadersAttack" classname="invadem.InvadersTest" time="0.0"/>
+  <testcase name="testInvadersRemain" classname="invadem.InvadersTest" time="0.0"/>
+  <testcase name="testInvadersMove" classname="invadem.InvadersTest" time="0.0"/>
+  <system-out><![CDATA[30
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

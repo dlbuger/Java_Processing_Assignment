@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="invadem.ProjectileTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2019-11-10T13:13:33" hostname="Z390" time="0.001">
+  <properties/>
+  <testcase name="testInvaderProjectileMove" classname="invadem.ProjectileTest" time="0.0"/>
+  <testcase name="testProjectileAttackPoint" classname="invadem.ProjectileTest" time="0.0"/>
+  <testcase name="testTankProjectileMove" classname="invadem.ProjectileTest" time="0.0"/>
+  <testcase name="testProjectileConstruction" classname="invadem.ProjectileTest" time="0.0"/>
+  <testcase name="testProjectileIntersectTankTrue" classname="invadem.ProjectileTest" time="0.0"/>
+  <testcase name="testProjectileIntersectFalse" classname="invadem.ProjectileTest" time="0.0"/>
+  <testcase name="testProjectileIntersectInvaderTrue" classname="invadem.ProjectileTest" time="0.0"/>
+  <testcase name="testProjectileLocation" classname="invadem.ProjectileTest" time="0.0"/>
+  <testcase name="testProjectileIsDestroyed" classname="invadem.ProjectileTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

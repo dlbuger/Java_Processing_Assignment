@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="invadem.InvaderTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-11-06T15:02:10" hostname="Z390" time="0.037">
+<testsuite name="invadem.InvaderTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2019-11-10T13:13:33" hostname="Z390" time="0.03">
   <properties/>
-  <testcase name="testRegularInvaderScore" classname="invadem.InvaderTest" time="0.037"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="testInvaderIsNotDead" classname="invadem.InvaderTest" time="0.0"/>
+  <testcase name="testInvaderIsDead" classname="invadem.InvaderTest" time="0.004"/>
+  <testcase name="testInvaderMove" classname="invadem.InvaderTest" time="0.025"/>
+  <testcase name="testInvaderConstruction" classname="invadem.InvaderTest" time="0.0"/>
+  <testcase name="testRegularInvaderScore" classname="invadem.InvaderTest" time="0.0"/>
+  <testcase name="testInvaderFireProjectile" classname="invadem.InvaderTest" time="0.0"/>
+  <system-out><![CDATA[Invader is hit!
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

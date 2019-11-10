@@ -52,7 +52,7 @@ public class Judge {
                 for (BarrierComponent o : barriers.getBarriers()[i].getBarrierComponents())
                     if (_check(invader, o)) {
                         o.hit(invader.getHealth()); // 传入子弹的攻击力
-                        invader.hit(o.getAttackPoint());
+                        invader.hit(1);
                         if (invader.isDestroyed()) {
                             increaseScore(invader.getScore());
                             invaders.invaderKilled();
@@ -93,7 +93,7 @@ public class Judge {
             Projectile bullet = iterator.next();
             for(Invader invader: invaders.getInvaders()) {
                 if (_check(bullet, invader)) {
-                    invader.hit(bullet.getAttackPoint());
+                    invader.hit(bullet.getHealth());
                     bullet.hit(bullet.getHealth());
                     iterator.remove();
                     if (invader.isDestroyed()) {
@@ -116,7 +116,7 @@ public class Judge {
             Projectile bullet = iterator.next();
             if(_check(bullet, tank))
             {
-                tank.hit(bullet.getAttackPoint());
+                tank.hit(bullet.getHealth());
                 bullet.hit(bullet.getHealth());
                 iterator.remove();
             }
@@ -143,7 +143,7 @@ public class Judge {
         for(int i = 0; i< barriers.getBarriers().length; i++)
             for(BarrierComponent o:barriers.getBarriers()[i].getBarrierComponents())
                 if(_check(bullet, o)) {
-                    o.hit(bullet.getAttackPoint()); // 传入子弹的攻击力
+                    o.hit(bullet.getHealth()); // 传入子弹的攻击力
                     return true;
                 }
         return false;
@@ -204,7 +204,7 @@ public class Judge {
 
     private void checkNextLevel()
     {
-        if (invaders.getInvadersLeft() <= 0)
+        if (invaders.getInvadersRemain() <= 0)
             App.gameState = App.NEXT;
     }
 

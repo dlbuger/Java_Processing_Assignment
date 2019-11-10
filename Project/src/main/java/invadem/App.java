@@ -122,7 +122,7 @@ public class App extends PApplet {
                     timeCheck4Tank = millis();
                 }
 
-            if(invaders.getInvadersLeft() == 0)
+            if(invaders.getInvadersRemain() == 0)
                 timeCheck = millis();
         }
         else if (gameState == END)
@@ -165,7 +165,7 @@ public class App extends PApplet {
         if (keyCode == ENTER)
             gameState = ON;
     }
-    private void gameOn() {
+    public void gameOn() {
         background(0);
         drawUI();
         barriers.showGroup();
@@ -351,7 +351,7 @@ public class App extends PApplet {
         fill(255);
         textSize(14);
         textFont(UIFont);
-        text(invaders.getInvadersLeft() + "\nInvaders left" ,70 , 445);
+        text(invaders.getInvadersRemain() + "\nInvaders left" ,70 , 445);
     }
     private void showDebug()
     {
@@ -377,6 +377,21 @@ public class App extends PApplet {
         if(!debug)
             debug = true;
     }
+
+    // Only used for TestCase!!
+    public Tank getTank(){
+        return tank;
+    }
+    public Invaders getInvaders(){
+        return invaders;
+    }
+    public Barriers getBarriers(){
+        return barriers;
+    }
+    public Judge getJudge(){
+        return judge;
+    }
+
     public static void main(String[] args) {
         PApplet.main("invadem.App");
     }

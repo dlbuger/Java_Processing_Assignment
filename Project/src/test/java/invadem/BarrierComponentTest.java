@@ -49,7 +49,6 @@ public class BarrierComponentTest {
     @Test
     public void TestBarrierComponentHealth3(){
         BarrierComponent b =new BarrierComponent(null);
-        b.show();
         assertEquals(3, b.getHealth());
     }
 
@@ -57,7 +56,6 @@ public class BarrierComponentTest {
     public void TestBarrierComponentHealth2(){
         BarrierComponent b =new BarrierComponent(null);
         b.hit(1);
-        b.show();
         assertEquals(2, b.getHealth());
     }
 
@@ -65,7 +63,6 @@ public class BarrierComponentTest {
     public void TestBarrierComponentHealth1(){
         BarrierComponent b =new BarrierComponent(null);
         b.hit(2);
-        b.show();
         assertEquals(1, b.getHealth());
     }
 
@@ -75,6 +72,5 @@ public class BarrierComponentTest {
         b.hit(b.getHealth());
         assertEquals(0, b.getHealth());
         assertTrue(b.isDestroyed());
-        b.show();
     }
 }
